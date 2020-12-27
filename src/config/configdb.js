@@ -1,5 +1,5 @@
 const oracledb = require('oracledb');
-oracledb.initOracleClient({configDir: '/opt/oracle/instantclient_19_9/network/admin'});
+oracledb.initOracleClient({configDir: '/opt/oracle/instantclient_21_1/network/admin'});
 
 cns = {
     user: "erick",
