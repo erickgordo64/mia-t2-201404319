@@ -20,7 +20,7 @@ router.get('/getUsuarios', async (req, res) => {
     result.rows.map(user => {
         let userSchema = {
             "nombre": user[1],
-            "coreo": user[2],
+            "correo": user[2],
             "contrasena": user[3],
         }
 
@@ -48,11 +48,13 @@ router.post('/registro', async (req, res) => {
 router.post('/login', async (req, res) => {
     const { email, password} = req.body;
 
-    sql = "select * from usuario where correo=:email";
+    sql = "select * from USUARIO where correo=:email and contrasena=:password";
 
     console.log(email);
 
-    let result = await BD.Open(sql, [email], false);
+
+
+    let result = await BD.Open(sql, [email,password], false);
     Users = [];
 
     result.rows.map(user => {
@@ -67,15 +69,22 @@ router.post('/login', async (req, res) => {
     let respv={"auth":"true"}
     let respf={"auth":"false"}
 
-    if (Users.correo === "true") {
-        console.log("usuario no validado");
-    } else {
-        if (Users.contrasena == password) {
-            res.json(respv);
-        } else {
-            res.json(respf);
+    console.log(Users);
+
+    if(Users.length === 0){
+        res.json(respf);
+    }else{
+        if(Users.correo = email){
+            console.log("correo correcto");
+            if(Users.contrasena=password){
+                console.log("contrasena correca")
+            }else{
+                console.log("contrasena incorrecta")
+            }
+        }else{
+            console.log("correo malo")
         }
-        console.log("usuario validado");
+        res.json(respv);
     }
 
 });
