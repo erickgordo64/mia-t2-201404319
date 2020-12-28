@@ -67,10 +67,10 @@ router.post('/login', async (req, res) => {
     let respv={"auth":"true"}
     let respf={"auth":"false"}
 
-    if (Users.nombre === "true") {
+    if (Users.correo === "true") {
         console.log("usuario no validado");
     } else {
-        if (Users.contrasena = password) {
+        if (Users.contrasena == password) {
             res.json(respv);
         } else {
             res.json(respf);
