@@ -73,7 +73,7 @@ router.post('/login', async (req, res) => {
         if (Users.contrasena = password) {
             res.json(respv);
         } else {
-            console.log(respf);
+            res.json(respf);
         }
         console.log("usuario validado");
     }
