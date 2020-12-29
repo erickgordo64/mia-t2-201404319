@@ -124,4 +124,24 @@ router.post('/crearProducto', async (req, res) => {
 });
 
 
+
+router.get('/facturastop', async (req, res) => {
+
+    sql = "select sum(detalle_factura.cantidad*producto.precioproducto ) as \"total\", detalle_factura.idfactura from detalle_factura inner join producto on producto.idproducto=detalle_factura.idproducto group by detalle_factura.idfactura order by \"total\" desc";
+
+    let result = await BD.Open(sql, [], false);
+    
+    Users = [];
+
+    result.rows.map(user => {
+        let userSchema = {
+            "total": user[0],
+            "idfactura": user[1]
+        }
+
+        Users.push(userSchema);
+    })
+    res.json(Users);
+});
+
 module.exports = router;
