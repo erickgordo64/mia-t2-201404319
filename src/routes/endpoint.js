@@ -127,7 +127,7 @@ router.post('/crearProducto', async (req, res) => {
 
 router.get('/facturastop', async (req, res) => {
 
-    sql = "select sum(detalle_factura.cantidad*producto.precioproducto ) as \"total\", detalle_factura.idfactura from detalle_factura inner join producto on producto.idproducto=detalle_factura.idproducto group by detalle_factura.idfactura order by \"total\" desc";
+    sql = "select sum(detalle_factura.cantidad*producto.precioproducto ) as \"total\", detalle_factura.idfactura from detalle_factura inner join producto on producto.idproducto=detalle_factura.idproducto group by detalle_factura.idfactura order by \"total\" desc FETCH NEXT 3 ROWS ONLY";
 
     let result = await BD.Open(sql, [], false);
     
