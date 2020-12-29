@@ -89,8 +89,39 @@ router.post('/login', async (req, res) => {
 
 });
 
+router.get('/getProducto', async (req, res) => {
 
+    sql = "SELECT * FROM PRODUCTO";
 
+    let result = await BD.Open(sql, [], false);
+    
+    Users = [];
+
+    result.rows.map(user => {
+        let userSchema = {
+            "nombreProducto": user[1],
+            "precioProducto": user[2],
+        }
+
+        Users.push(userSchema);
+    })
+    res.json(Users);
+});
+
+router.post('/crearProducto', async (req, res) => {
+
+    const { nombreProducto, precioProducto} = req.body;
+
+    sql = "insert into producto(nombreProducto, precioProducto) values (:nombreProducto, :precioProducto)";
+
+    await BD.Open(sql, [nombreProducto, precioProducto], true);
+
+    res.status(200).json({
+        "nombre": nombreProducto
+    })
+
+    console.log("registro ingresado")
+});
 
 
 module.exports = router;
